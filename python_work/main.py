@@ -57,6 +57,8 @@ class AudioViz_GUI(tk.CTk):
         # Start the Audio Stream using the Audio Input Class
         self.AudioControl = AudioInput()
 
+        self.AudioScaleMP3Playing = 2
+
         # Used to control the USB Conncetion
         self.ArduinoControl = USBComm()
 
@@ -121,7 +123,13 @@ class AudioViz_GUI(tk.CTk):
             if self.ArduinoAmpMode:
                 color = int(hsv_color)
                 color = str(color)
-                amplitude = str(self.AudioControl.GetAmplitude())
+                amplitude = self.AudioControl.GetAmplitude()
+
+                # Scale the amplitude if an audio file is playing
+                if AudioFileIsRunning:
+                    amplitude *= self.AudioScaleMP3Playing
+                
+                amplitude = str(amplitude)
                 data = color + "," + amplitude
 
                 print(f"Data is {data}")

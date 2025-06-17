@@ -74,14 +74,29 @@ Refers the part of the python application that does the audio input and processi
 
 
 # Software Artifacts
-This includes some associated documentation. The actual python code can be found under the python_work folder. The arduino code can be found under the 
+This includes some associated documentation. The actual python code can be found under the python_work folder. The arduino code can be found under the src folder. 
+This project was built into an executable using pyinstaller. The executable can be found in the python folder along with the build instructions for pyinstaller.
 
+### Important Documentation
 [Project Proposal](project-proposal.md)
 
+[Tasks (Additionally Trello was used)](tasks.md)
+
+[Project Check In Presentation](ProjectCheckInPresentation_BTripleJ.pdf)
+
+[Final Presentation](FinalPresentation.pdf)
+
+### UML Diagram
 ![UML Diagram](UML_Diagram.png)
-![GANNTT Chart](GANNTT_Chart.png)
-![Communication Diagram](Communication_Diagram)
 
-Burn Down Chart
-Use Case Diagram
+### GANTT Chart
+![GANTT Chart](GANTT_Chart.png)
 
+### Use Case Diagram
+![Use Case Diagram](UseCase_Diagram.png)
+
+### Communication Diagram
+![Communication Diagram]()
+
+### Burn Down Chart
+![Burn Down Chart]()

@@ -10,6 +10,10 @@ class AudioFilePlayer(ctk.CTkFrame):
 
         self.configure(height=220, width=500)
         self.grid_propagate(False)
+        
+        # Play/Pause flag used to disable play once
+        self.play_pause_enabled = True
+
         # file path stuff
         self._file_path = None
         self._file_name = None
@@ -34,6 +38,22 @@ class AudioFilePlayer(ctk.CTkFrame):
     def file_path(self, new_fp):
         self._file_name = (new_fp.split("/"))[-1]
         self._file_path = new_fp
+
+    def enablePlay(self):
+        """
+        Enables the play/pause pause only once if called repeatedly.
+        """
+        if not self.play_pause_enabled:
+            self.play_pause.configure(state="normal")
+            self.play_pause_enabled = True
+    
+    def disablePlay(self):
+        """
+        Disables the play/pause pause only once if called repeatedly.
+        """
+        if self.play_pause_enabled:
+            self.play_pause.configure(state="disabled")
+            self.play_pause_enabled = False
 
     # Play/Pause Sound
     def playPauseSound(self):
@@ -80,7 +100,9 @@ class AudioFilePlayer(ctk.CTkFrame):
             time = self.parent.AudioControl.getAudioFileTime()
             if time < 0.001:
                 self.audio_timeline_cur_time.configure(text="--:--")
+                self.audio_timeline.set(0)
             else:
+                self.audio_timeline.set(time)
                 self.audio_timeline_cur_time.configure(text=f"{int(time//60):02}:{int(time%60):02}")
 
     def updateTotalTime(self):

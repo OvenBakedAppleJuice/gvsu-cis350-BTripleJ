@@ -7,15 +7,28 @@ from pydub import AudioSegment
 import threading
 import queue
 import os
+import sys
 
 class AudioInput:
     """
     This class is used for streaming and processing the audio.
     """
     def __init__(self):
+        # Determine the base path for resources
+        if hasattr(sys, '_MEIPASS'):
+            # Running in a PyInstaller bundle
+            base_path = sys._MEIPASS
+        else:
+            # Running in a normal Python environment for development
+            base_path = ""
+
+        # Construct the full paths to the binaries
+        ffmpeg_path = os.path.join(base_path, 'ffmpeg.exe')
+        ffprobe_path = os.path.join(base_path, 'ffprobe.exe')
+
         # Used by pydub to convert mp3 files to wave files
-        AudioSegment.converter = 'ffmpeg.exe'
-        AudioSegment.ffprobe = 'ffprobe.exe'
+        AudioSegment.converter = ffmpeg_path
+        AudioSegment.ffprobe = ffprobe_path
 
         #Used by pyaudio to stream audio
         self.__chunk = 2048  # Record in chunks of 1024 samples
@@ -27,7 +40,7 @@ class AudioInput:
         self.__port = pyaudio.PyAudio()  # Create an interface to PortAudio
         self.__stream = None
         self.__q = queue.Queue()
-        self.playing_task = None
+        self.__playing_task = None
         
         #These are variables used to stop the audio input stream
         self.__input_stream_running = False
@@ -36,7 +49,6 @@ class AudioInput:
         #These are variables used for controlling an audio file output stream
         self.__output_stream_running = False
         self.__output_stream_pause = False
-        self.__output_stream_complete = True
         self.__audio_data_chunks = []
         self.__num_audio_file_chunks = 0
         self.__audio_file_cur_time = 0
@@ -52,7 +64,7 @@ class AudioInput:
         # sample spacing
         T = 1.0 / self.__fs
         #X time axis for one audio chunk (lowest detectable freq will be 25 Hz)
-        self.__fft_x = np.linspace(0.0, self.__chunk*T, self.__chunk, endpoint=False)
+        # self.__fft_x = np.linspace(0.0, self.__chunk*T, self.__chunk, endpoint=False)
     
     # REGION Set and Get Input Audio Devices ******************************************************
     def SetDevice(self, device):
@@ -135,28 +147,21 @@ class AudioInput:
         #Collecting the max value just to show the data.
         return abs(round((maxVal-minVal)/self.__max_amplitude*100*self.__sensativity_multiplier))
 
-
-
     def __getFft(self):
         """
+        Generates the Fft, also calls self.__GetAudioData() which sets self.__audio_int16_array.
+        GetAudioData() also returns self.__audio_int16_array.
+
         Sources: 
         https://docs.scipy.org/doc/scipy/tutorial/fft.html
         https://pythonnumericalmethods.studentorg.berkeley.edu/notebooks/chapter24.04-FFT-in-Python.html
         """
         #tapers start and end of audio chunk 9to and from 0) to improve fft quality
-        signal = self.GetAudioData()
+        signal = self.__GetAudioData()
         start = np.linspace(0, signal[9], 9).astype(np.int16)
         end = np.linspace(signal[-9], 0, 9).astype(np.int16)
         middle = signal[10:-9].astype(np.int16)
-        # print("Start")
-        # print(start)
-        # print("End")
-        # print(end)
-        # print("Middle Signal")
-        # print(middle)
-        # print("Complete Signal: ")
-        # print(np.concatenate(start,signal[10:-10]))
-        # print(help(np.concatenate))
+        # Complete signal with faded start and
         signal = np.concatenate((start, middle, end), axis=None)
         # print(len(signal)) for some reason this is 4095, in theory it should be 2048
         
@@ -180,14 +185,14 @@ class AudioInput:
 
         return frequencies_positive, magnitudes_positive
 
-    def GetLargestMagFreq(self):
-        """
-        Returns the frequency with the largest magnitude.
-        """
-        freq, mags = self.__getFft()
-        largest = mags.argmax()
+    # def GetLargestMagFreq(self):
+    #     """
+    #     Returns the frequency with the largest magnitude.
+    #     """
+    #     freq, mags = self.__getFft()
+    #     largest = mags.argmax()
         
-        return freq[largest]
+    #     return freq[largest]
 
     def PrintSixteenBinsStr(self):
         """
@@ -255,8 +260,8 @@ class AudioInput:
         self.__audio_file_cur_time = 0
         self.ConvertMP3File(file)
         self.__output_stream_running = True
-        self.playing_task = threading.Thread(target=self.RunAudioFileStream)
-        self.playing_task.start()
+        self.__playing_task = threading.Thread(target=self.RunAudioFileStream)
+        self.__playing_task.start()
 
     
     def RunAudioFileStream(self):
@@ -348,6 +353,8 @@ class AudioInput:
         Resumes audio output stream.
         """
         self.__output_stream_pause = False
+
+
     
     def RestartPlayingAudioFile(self):
         """
@@ -362,9 +369,9 @@ class AudioInput:
         Stops audio output and waits for thread to finish.
         """
         self.__output_stream_running = False
-        if not (self.playing_task is None):
-            if self.playing_task.is_alive():
-                self.playing_task.join()
+        if not (self.__playing_task is None):
+            if self.__playing_task.is_alive():
+                self.__playing_task.join()
         self.__audio_file_cur_time = 0
 
     def setAudioFileVolume(self, volume):
@@ -376,14 +383,15 @@ class AudioInput:
 
     # REGION Start and run Input Audio Stream ******************************************************
     def StartStream(self):
+        self.EndPlayingAudioFile()
         print("#" * 80)
         print("#" * 80)
         self.__fs = self.__default_fs
         #initializes and starts task
-        self.playing_task = threading.Thread(target=self.RunStream)
+        self.__playing_task = threading.Thread(target=self.RunStream)
         self.__input_stream_running = True
         self.__input_stream_complete = False
-        self.playing_task.start()
+        self.__playing_task.start()
 
         print('-----Now Streaming-----')
 
@@ -412,7 +420,7 @@ class AudioInput:
                 self.__q.put(sound_data)
 
             except Exception as e:
-                print("LiveView: playing_task, audio_frame_queue is empty.")
+                print("LiveView: __playing_task, audio_frame_queue is empty.")
                 continue
 
         #Stream has been closed
@@ -433,7 +441,7 @@ class AudioInput:
         
         print("Stream stopped.")
 
-    def GetAudioData(self):
+    def __GetAudioData(self):
         """
         Returns an array with 1024 int16 data values. This is the most recent audio chunk.
         """

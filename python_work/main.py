@@ -57,7 +57,10 @@ class AudioViz_GUI(tk.CTk):
         # Start the Audio Stream using the Audio Input Class
         self.AudioControl = AudioInput()
 
+        # Used to control the USB Conncetion
         self.ArduinoControl = USBComm()
+
+        # Flags used in mainloop
         self.ArduinoAmpMode = True
         self.ArduinoFreqMode = False
 
@@ -88,17 +91,28 @@ class AudioViz_GUI(tk.CTk):
         which is an internal function that calls the GUI display functions and handles the callbacks.
         """
         AudioFileIsRunning = self.AudioControl.getAudioStreamRunning()
+
         if AudioFileIsRunning:
             self.audio_file_player.updateTimeDisplay()
+            self.play_pause.disablePlay()
+        else:
+            self.play_pause.enablePlay()
         
         color = self.play_pause.getHexInt()
         # print(color)
         hsv_color = self.play_pause.getHsvColor()[0]
         print(hsv_color)
 
+        if self._play_pause_pass:
+            self.audio_file_player.disablePlay()
+        else:
+            self.audio_file_player.enablePlay()
+
+
         # if statement controled by PlayPauseMode buttons, contains handles to graph and Arduino
         #check if PlayPauseMode -> Play (Button) is enabled to continue loop
         if self._play_pause_pass or AudioFileIsRunning:
+
             data = self.AudioControl.GetSixteenFrequencies()
                 
             plot = self.binsPlot.plotBins(data)
@@ -153,9 +167,6 @@ class AudioViz_GUI(tk.CTk):
         # setup for base chart (no data)
         plot = self.binsPlot.plotBinsEmpty()
         plot.grid(row=0, column=2, padx=0, pady=0)
-        
-    def dropdownCallback(self):
-        print("Here")
 
     def onClosing(self):
         """
@@ -173,9 +184,9 @@ class AudioViz_GUI(tk.CTk):
             print(e)
         sys.exit() #End program, closes all threads
 
+if __name__ == '__main__':
+    #Initializes application
+    app = AudioViz_GUI()
 
-#Initializes application
-app = AudioViz_GUI()
-
-#Starts application
-app.mainloop()
+    #Starts application
+    app.mainloop()

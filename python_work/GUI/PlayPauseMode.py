@@ -12,6 +12,8 @@ class PlayPauseMode(ctk.CTkFrame):
         self.menuSetup()
 
         self.color_hsv = None
+        # Flag used to disable or enable play/pause button once
+        self.play_enabled = True
 
 
     def playButtonClick(self):
@@ -27,6 +29,18 @@ class PlayPauseMode(ctk.CTkFrame):
             self.play.configure(fg_color="#db0909", text="Pause/Stop", hover_color="#a10303")
             self.parent._play_pause_pass = True
             self.parent.AudioControl.StartStream()
+            self.parent.audio_file_player.resetPlayer()
+    
+    def enablePlay(self):
+        if not self.play_enabled:
+            self.play.configure(state="normal")
+            self.play_enabled = True
+        
+    def disablePlay(self):
+        if self.play_enabled:
+            self.play.configure(state="disabled")
+            self.play_enabled = False
+
 
     def modeSelect(self):
         self.parent.switchArduinoAudioMode()

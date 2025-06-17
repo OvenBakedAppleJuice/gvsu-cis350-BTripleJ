@@ -1,72 +1,80 @@
 # Overview
 
-This document describes the functional and non-functional requirements of the semester project for BTripleJ in CIS350. The project is an audio visualizer with a microcontroller and LED display along with a Python GUI and python audio processing. The functional requirements describe the functionality of the entire system, and the non-functional requirements outline some of the ways it may be implemented.
+This document describes the functional and non-functional requirements of the semester project for BTripleJ in CIS350.
+
+The project is an audio visualizer, using a microcontroller, LED array, along with Python audio processing and a GUI. These functional requirements describe the functionality of the entire system, and the non-functional requirements outline some of the ways it may be implemented.
 
 # Functional Requirements
 
-1. The system shall have a GUI that allows for controlling the audio visualizer. -JNS
+1. The system shall have a GUI that allows for controlling the audio visualizer.
 
-2. The system shall have a GUI to select a port for Arduino. JGM
+2. The system shall have a GUI to select a port for Arduino.
 
-3. The system shall have a LED display for the audio visualization. -JNS
+3. The system shall have a LED display for the audio visualization.
 
-4. The system shall be able to use audio from a microphone. -JNS
+4. The system shall be able to use audio from a microphone.
 
-5. The system shall be able to use audio from a file.-B
+5. The system shall be able to use audio from a file.
 
-6. The system shall be able to send serial data to a microcontroller. JGM
+6. The system shall send serial data to a microcontroller.
 
-7. The system shall parse pitch and volume from serial data. JGM
+7. The system shall parse pitch and volume from serial data.
 
-8. The system shall find the frequencies from a given audio input. -B
+8. The system shall find the frequencies from a given audio input.
 
-9. The system shall find the amplitude from a given audio input. - B
+9. The system shall find the amplitude from a given audio input.
 
-10. The system shall have documentation to explain how to use it. -JNS
+10. The system shall have documentation to explain how to use it.
 
-11. The system shall support different visualizations modes -JD
+11. The system shall display amplitude of a given audio input.
 
-12. The system shall notify the user if a serial port is unavailable. JGM
+12. The system shall display frequency of a given audio input.
 
-13. The system shall power the LED reliably - JD
+13. The system shall notify the user if a serial port is unavailable.
 
-14. The system shall allow the user to easily turn on/off the system itself. - JD
+14. The system shall power the LED reliably.
 
-15. The system shall display audio values to show proper usage of the sound system - JD
+15. The system shall allow the user to easily turn on/off the system itself.
+
+16. The system shall display audio values to show proper usage of the sound system.
 
 
 
 # Non-Functional Requirements
 
-1. The system may use an Arduino microcontroller - B
+1. The system may be able to use an arduino microcontroller.
 
-2. The system may use the FastLED library - B
+2. The systme may be able to use an esp32 microcontroller.
 
-3. The system may use python PyAudio, an API for PortAudio, to get audio input. -JNS
+2. The system may use the FastLED library.
 
-4. The system may use the Tkinter library for the GUI. -JNS
+3. The system may use python PyAudio, an API for PortAudio, to get audio input.
 
-5. The system may use python multithreading to collect audio while processing it.-JNS
+4. The system may use the Tkinter library for the GUI.
 
-6. The system may process data in 200 milliseconds. JGM
+5. The system may use python multithreading to collect audio while processing it.
 
-7. The system may filter out bad inputs on the microcontroller input JGM
+6. The system may process data in 200 milliseconds.
 
-8. The system may be able to perform with both Mac and Windows. JGM
+7. The system may filter the microcontroller inputs.
 
-9. The system may use prebuilt python packages. - JD
+8. The system may be able to perform with both Mac and Windows.
 
-10. The system may have a simple, intuitive, GUI - B
+9. The system may use prebuilt python packages.
 
-11. The system may use python numpy to process data more quickly. -JNS
+10. The system may have a GUI with minimal buttons.
 
-12. The system may operate continuously without crashing - JD
+11. The system may use python numpy to process data quickly.
 
-13. The system may set a max and minimal brightness for the LEDs -JGM
+12. The system may operate continuously without crashing.
 
-14. The system may be durable for prolonged use - JD
+13. The system may set a maximum and minimum brightness for the LEDs.
 
-15. The system may use different color LEDs to denote different frequencies. - B
+14. The system may be durable for prolonged use.
 
-16. The system may be modular for and well-documented to allow for future updates - JD
+15. The system may use different color LEDs to denote different frequencies.
+
+16. The system may be modular for future updates.
+
+17. The system documentation may be understandable to someone with no knowledge of the system.
 

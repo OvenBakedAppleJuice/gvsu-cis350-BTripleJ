@@ -201,6 +201,6 @@ class AudioFilePlayer(ctk.CTkFrame):
         self.audio_timeline_total_time.grid(row=3, column=1, padx=10, pady=1, sticky="e")
         self.audio_timeline.set(0)
 
-        self.widgets = [self.frame_title, self.play_pause, self.restart_btn, self.file_volume, self.file_name_label]
+        # self.widgets = [self.frame_title, self.play_pause, self.restart_btn, self.file_volume, self.file_name_label]
 
     

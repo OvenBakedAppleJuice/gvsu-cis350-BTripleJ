@@ -3,10 +3,10 @@
 This project is an audio visualizer application. It has two major components, a GUI that allows a user to select audio input from a variety of sources (including a microphone and MP3 file) and an arduino that creates a display on an LED matrix. The arduino communicates with the application over USB and the USB device can be selected in the GUI along with the desired color of the audio visualization. Some audio visualization happens in the GUI as well.
 
 # Team Members and Roles
-* [Josh Dobbs](https://github.com/OvenBakedAppleJuice/CIS350-HW2-DOBBS) (GitHub Manager, ###)
-* [Jason Gray-Moore](https://github.com/graymooj/CIS350-HW2-Gray-Moore.git) (Tester)
-* Joeseph Shotts (Software Developer)
-* Blake Collins (Software Developer)
+* [Josh Dobbs](https://github.com/OvenBakedAppleJuice/CIS350-HW2-DOBBS) (GitHub Manager, GUI Developer)
+* [Jason Gray-Moore](https://github.com/graymooj/CIS350-HW2-Gray-Moore.git) (Tester, Communications Manager)
+* Joeseph Shotts (Software Developer, Arduino Tester)
+* Blake Collins (Software Developer, Arduino Tester)
 
 # Prerequisites
 ## Python

@@ -5,7 +5,7 @@ This project is an audio visualizer application. It has two major components, a 
 # Team Members and Roles
 * [Josh Dobbs](https://github.com/OvenBakedAppleJuice/CIS350-HW2-DOBBS) (GitHub Manager, GUI Developer)
 * [Jason Gray-Moore](https://github.com/graymooj/CIS350-HW2-Gray-Moore.git) (Tester, Communications Manager)
-* Joeseph Shotts (Software Developer, Arduino Tester)
+* Joeseph Shotts (Software Developer. Arduino Tester)
 * Blake Collins (Software Developer, Arduino Tester)
 
 # Prerequisites

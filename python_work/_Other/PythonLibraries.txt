@@ -1,0 +1,6 @@
+python -> 3.11.0
+pip install pydub -> (0.25.1)
+pip install pyaudio -> (0.2.14)
+pip install customtkinter -> (5.2.2)
+pip install numpy -> (2.2.6)
+pip install matplotlib -> (3.10.3)

@@ -32,7 +32,7 @@ This project is an audio visualizer application. It has two major components, a 
 * Choose between Amplitude more and Frequency mode to transfer different data to the Arduino
 
 # Live Demo
-Click [Here](https://www.youtube.com/watch?v=ICOQwn6wjXU) or on the image to watch!
+### Click [Here](https://www.youtube.com/watch?v=ICOQwn6wjXU) or on the image to watch!
 [![Live Demo ->](https://img.youtube.com/vi/ICOQwn6wjXU/0.jpg)](https://www.youtube.com/watch?v=ICOQwn6wjXU)
 
 

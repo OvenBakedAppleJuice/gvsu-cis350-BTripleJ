@@ -96,7 +96,7 @@ This project was built into an executable using pyinstaller. The executable can 
 ![Use Case Diagram](UseCase_Diagram.png)
 
 ### Communication Diagram
-![Communication Diagram]()
+![Communication Diagram](../artifacts/CommunicationsDiagram.png)
 
 ### Burn Down Chart
-![Burn Down Chart]()
+![Burn Down Chart](../artifacts//burndown%20chart/BurnDownChart-6-18.png)

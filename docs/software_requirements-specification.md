@@ -100,3 +100,6 @@ This project was built into an executable using pyinstaller. The executable can 
 
 ### Burn Down Chart
 ![Burn Down Chart](../artifacts//burndown%20chart/BurnDownChart-6-18.png)
+
+### Video Demo
+[![Live Demo ->](https://img.youtube.com/vi/ICOQwn6wjXU/0.jpg)](https://www.youtube.com/watch?v=ICOQwn6wjXU)

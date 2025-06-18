@@ -1,4 +1,5 @@
-##Team Name: B Triple J
+# Team Name: B Triple J
+
 # Description:
 This project is an audio visualizer application. It has two major components, a GUI that allows a user to select audio input from a variety of sources (including a microphone and MP3 file) and an arduino that creates a display on an LED matrix. The arduino communicates with the application over USB and the USB device can be selected in the GUI along with the desired color of the audio visualization. Some audio visualization happens in the GUI as well.
 
